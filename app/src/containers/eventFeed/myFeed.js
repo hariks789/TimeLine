@@ -18,8 +18,8 @@ export default class MyFeed extends Component<Props> {
 	}
 
   componentDidMount() {
-    Api.get('/recent-events?from-latest=false&a=0&l=14').then(resp => {
-      this.setState({ events: resp })
+    Api.get('/follow-timeline-events?from-latest=false&start=0&l=14').then(resp => {
+      if(Array.isArray(resp)) this.setState({ events: resp })
     })
   }
 

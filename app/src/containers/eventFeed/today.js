@@ -18,8 +18,9 @@ export default class Today extends Component<Props> {
 	}
 
   componentDidMount() {
-    Api.get('/follow-timeline-events?from-latest=false&start=0&l=14').then(resp => {
-      this.setState({ events: resp })
+    Api.get('/recent-events?from-latest=false&a=0&l=14').then(resp => {
+      console.log('Today', resp);
+      if(Array.isArray(resp)) this.setState({ events: resp })
     })
   }
 

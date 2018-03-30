@@ -19,7 +19,7 @@ export default class Upcoming extends Component<Props> {
 
   componentDidMount() {
     Api.get('/popular-upcoming-events?from-latest=false&a=0&l=14').then(resp => {
-      this.setState({ events: resp })
+      if(Array.isArray(resp)) this.setState({ events: resp })
     })
   }
 

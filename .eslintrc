@@ -12,5 +12,6 @@
     ],
     "rules": {
         // overrides
+        "no-console":0,
     }
 }

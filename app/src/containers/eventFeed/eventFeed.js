@@ -5,7 +5,7 @@ import {
   Dimensions,
   View
 } from 'react-native';
-import { TabViewAnimated, TabBar, SceneMap } from 'react-native-tab-view';
+import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import MyFeed from './myFeed';
 import Today from './today';
 import Upcoming from './upcoming';
@@ -14,10 +14,6 @@ const initialLayout = {
   height: 0,
   width: Dimensions.get('window').width,
 };
-
-const FirstRoute = () => <MyFeed />;
-const SecondRoute = () => <Today />;
-const ThirdRoute = () => <Upcoming />;
 
 type Props = {};
 export default class EventFeed extends Component<Props> {
@@ -35,13 +31,20 @@ export default class EventFeed extends Component<Props> {
 
   handleIndexChange = index => this.setState({ index });
 
-  renderHeader = props => <TabBar {...props} style={{backgroundColor: '#fff'}} labelStyle={{ color: 'green' }} />;
+  renderHeader = props => <TabBar {...props} style={{backgroundColor: '#fff'}} labelStyle={{ color: 'green' }} indicatorStyle={{ borderColor: 'green' }} />;
 
-  renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-    third: ThirdRoute
-  });
+  renderScene = ({ route }) => {
+    switch (route.key) {
+    case 'first':
+      return <Today />;
+    case 'second':
+      return <MyFeed />;
+    case 'third':
+      return <Upcoming />;
+    default:
+      return null;
+    }
+  }
 
   render() {
     return (
@@ -52,6 +55,7 @@ export default class EventFeed extends Component<Props> {
           renderHeader={this.renderHeader}
           onIndexChange={this.handleIndexChange}
           initialLayout={initialLayout}
+          useNativeDriver
         />
       </View>
     );

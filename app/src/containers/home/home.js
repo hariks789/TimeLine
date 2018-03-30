@@ -6,6 +6,7 @@ import {
   Dimensions,
   TouchableOpacity,
   View,
+  StatusBar,
   ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -64,8 +65,13 @@ export default class Home extends Component<Props> {
 	}
 
 	render() {
+    console.disableYellowBox = true;
+
     return (
       <View style={styles.container}>
+        <StatusBar
+          hidden
+        />
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Timeline</Text>
         </View>
