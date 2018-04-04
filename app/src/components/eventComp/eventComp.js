@@ -16,7 +16,7 @@ export default class EventComp extends Component {
   }
 
   render() {
-    const { time, title, name, imageUrl, photos, videos, description} = this.props;
+    const { time, title, name, imageUrl, photos, videos, description, handlePress} = this.props;
     return(
       <View style={styles.rootContainer}>
         <View style={styles.dateContainer}>
@@ -41,21 +41,33 @@ export default class EventComp extends Component {
           </View>
             <View style={styles.verticalLine}></View>
         </View>
-        <TouchableOpacity style={styles.messageContainer}>
+        <TouchableOpacity style={styles.messageContainer} onPress={() => this.props.handlePress()}>
           <View>
             {Triangle}
           </View>
           <View style={[styles.messageSubContainer, { justifyContent: 'center' }]}>
             <View style={styles.textContainer}>
-              <Text style={{ fontSize: 12, color: 'black', paddingVertical: 5 }}>{name}</Text>
+              <View style={{ flexDirection: 'row' }}>
+                {
+                  imageUrl
+                  ?
+                  <Image
+                    style={{width: 30, height: 30, marginRight: 10}}
+                    source={{uri: imageUrl}}
+                    resizeMode="cover"
+                    borderRadius={15}
+                  />
+                  :
+                  <View
+                    style={{width: 30, height: 30, borderRadius: 15, backgroundColor: 'grey'}}
+                  />
+                }
+                <Text style={{ fontSize: 12, color: 'black', paddingVertical: 5 }}>{name}</Text>
+              </View>
               <Text style={{ fontSize: 12, color: 'grey', paddingVertical: 5 }}>{title}</Text>
               <Text style={{ fontSize: 12, color: 'grey', paddingVertical: 5 }}>{description.length > 50 ? `${description.slice(0,50)}...` : description}</Text>
             </View>
             <View style={styles.imageContainer}>
-              <Image
-                style={{width: 60, height: 60}}
-                source={{uri: imageUrl}}
-              />
             </View>
           </View>
         </TouchableOpacity>

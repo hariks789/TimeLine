@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
+  PropTypes,
   Dimensions,
   TouchableOpacity,
   View,
@@ -16,7 +17,9 @@ import EventFeed from '../eventFeed/eventFeed';
 
 const {height, width} = Dimensions.get('window');
 
-type Props = {};
+type Props = {
+  navigation: PropTypes.obj
+};
 export default class Home extends Component<Props> {
 	constructor(props) {
 	super(props);
@@ -29,9 +32,7 @@ export default class Home extends Component<Props> {
       return(
         <View style={{ flex: 1 }}>
           <View style={styles.tabContainer}>
-            <TouchableOpacity style={styles.tab}><Text style={[styles.tabText, {fontWeight: 'bold'}]}>My Timeline</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.tab}><Text style={styles.tabText}>Following</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.tab}><Text style={styles.tabText}>Today</Text></TouchableOpacity>
+            <View style={styles.tab}><Text style={[styles.tabText, {fontWeight: 'bold'}]}> Featured</Text></View>
           </View>
           <View style={{flex: 0.925}}>
             <ScrollView>
@@ -48,7 +49,7 @@ export default class Home extends Component<Props> {
       );
     } else if(this.state.tabCount === 0) {
       return(
-        <EventFeed />
+        <EventFeed navigation={this.props.navigation}/>
       );
     }
     else if(this.state.tabCount === 3) {

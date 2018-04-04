@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     flex: 0.7,
     flexWrap: 'wrap',
     padding: 2,
+    paddingLeft: 5
   },
   imageContainer: {
     flex: 0.3,

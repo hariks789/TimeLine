@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Dimensions,
+  PropTypes,
   View
 } from 'react-native';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
@@ -15,7 +16,9 @@ const initialLayout = {
   width: Dimensions.get('window').width,
 };
 
-type Props = {};
+type Props = {
+  navigation: PropTypes.obj,
+};
 export default class EventFeed extends Component<Props> {
   constructor(props) {
     super(props);
@@ -23,7 +26,7 @@ export default class EventFeed extends Component<Props> {
       index: 0,
       routes: [
         { key: 'first', title: 'Today' },
-        { key: 'second', title: 'My Timeline' },
+        { key: 'second', title: 'Following' },
         { key: 'third', title: 'Upcoming' },
       ],
     };
@@ -36,11 +39,11 @@ export default class EventFeed extends Component<Props> {
   renderScene = ({ route }) => {
     switch (route.key) {
     case 'first':
-      return <Today />;
+      return <Today navigation={this.props.navigation} />;
     case 'second':
-      return <MyFeed />;
+      return <MyFeed navigation={this.props.navigation}  />;
     case 'third':
-      return <Upcoming />;
+      return <Upcoming navigation={this.props.navigation}  />;
     default:
       return null;
     }

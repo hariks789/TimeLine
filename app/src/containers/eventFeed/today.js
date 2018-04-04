@@ -3,12 +3,15 @@ import React, { Component } from 'react';
 import {
   FlatList,
   StyleSheet,
+  PropTypes,
   View,
 } from 'react-native';
 import Api from '../../../api/api';
 import EventComp from '../../components/eventComp/eventComp';
 
-type Props = {};
+type Props = {
+  navigation: PropTypes.obj,
+};
 export default class Today extends Component<Props> {
   constructor(props) {
     super(props);
@@ -24,7 +27,12 @@ export default class Today extends Component<Props> {
     })
   }
 
-  renderItem(item) {
+  handlePress = (item) => {
+    console.log();
+    this.props.navigation.navigate('EventDetails', {details: item});
+  }
+
+  renderItem = (item) => {
     return(
       <EventComp
         key={item.item.id}
@@ -35,6 +43,7 @@ export default class Today extends Component<Props> {
         description={item.item.description ? item.item.description : ''}
         videos={item.item.videos}
         photos={item.item.photos}
+        handlePress={() => this.handlePress(item)}
       />
     );
   }
