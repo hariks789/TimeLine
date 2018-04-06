@@ -7,6 +7,7 @@ import About from './app/src/containers/userInfo/about';
 import Faq from './app/src/containers/userInfo/faq';
 import PrivacyPolicy from './app/src/containers/userInfo/privacyPolicy';
 import Terms from './app/src/containers/userInfo/terms';
+import Timeline from './app/src/containers/timeline/timeline';
 
 const RootStack = StackNavigator(
   {
@@ -27,6 +28,9 @@ const RootStack = StackNavigator(
     },
     Terms: {
       screen: Terms
+    },
+    Timeline: {
+      screen: Timeline
     },
   },
   {

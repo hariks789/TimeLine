@@ -5,8 +5,6 @@ import {
   View,
   Dimensions,
   PropTypes,
-  Image,
-  ScrollView,
   TouchableOpacity,
   Text
 } from 'react-native';
@@ -24,7 +22,6 @@ export default class NavBar extends Component<Props> {
   }
 
 	render() {
-    const { params } = this.props.navigation.state;
 
     return (
       <View style={styles.container}>
@@ -32,7 +29,7 @@ export default class NavBar extends Component<Props> {
           style={styles.headerContainer}
           onPress={()=>this.props.navigation.goBack()}
         >
-          <Icon name="arrow-left" size={20}/>
+          <Icon name="arrow-left" size={25} color={'#fff'}/>
           <Text style={styles.headerText}>Timeline</Text>
         </TouchableOpacity>
       </View>
@@ -48,11 +45,13 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row',
+    paddingLeft: 10,
     alignItems: 'center',
     backgroundColor: '#8bc34a',
   },
   headerText: {
     paddingLeft: 10,
-    fontSize: 18
+    fontSize: 18,
+    color: '#fff'
   }
 });

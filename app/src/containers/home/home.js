@@ -5,16 +5,14 @@ import {
   Text,
   PropTypes,
   Dimensions,
-  TouchableOpacity,
   View,
   StatusBar,
-  ScrollView
 } from 'react-native';
 import BottomNavigation, { Tab } from 'react-native-material-bottom-navigation'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import ProfileCard from '../../components/profileCard/profileCard';
 import UserInfo from '../userInfo/userInfo';
 import EventFeed from '../eventFeed/eventFeed';
+import Timeline from '../timeline/timelineList';
 
 const {height, width} = Dimensions.get('window');
 
@@ -22,32 +20,17 @@ type Props = {
   navigation: PropTypes.obj
 };
 export default class Home extends Component<Props> {
-	constructor(props) {
-	super(props);
-	this.state = {tabCount: 0};
+  constructor(props) {
+    super(props);
+    this.state = {
+      tabCount: 0
+    };
+  }
 
-	}
-
-
-  renderContent() {
+  renderContent = () => {
     if(this.state.tabCount === 2) {
       return(
-        <View style={{ flex: 1 }}>
-          <View style={styles.tabContainer}>
-            <View style={styles.tab}><Text style={[styles.tabText, {fontWeight: 'bold'}]}> Featured</Text></View>
-          </View>
-          <View style={{flex: 0.925}}>
-            <ScrollView>
-              <View style={styles.contentContainer}>
-                <ProfileCard />
-                <ProfileCard />
-                <ProfileCard />
-                <ProfileCard />
-                <ProfileCard />
-              </View>
-            </ScrollView>
-          </View>
-        </View>
+        <Timeline navigation={this.props.navigation}/>
       );
     } else if(this.state.tabCount === 0) {
       return(
@@ -170,6 +153,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#8bc34a',
     alignItems: 'center',
+    elevation: 2
   },
   tabContainer: {
     flex: 0.075,

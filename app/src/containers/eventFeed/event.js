@@ -26,7 +26,6 @@ export default class EventDetails extends Component<Props> {
 
 	render() {
     const { params } = this.props.navigation.state;
-    console.log('details', params.details);
 
     return (
       <View style={styles.container}>
