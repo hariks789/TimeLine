@@ -3,19 +3,11 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  Dimensions,
-  PropTypes,
-  Image,
-  WebView,
-  ScrollView,
-  TouchableOpacity,
   Text
 } from 'react-native';
+import NavBar from '../../components/navBar/navBar';
 
-type Props = {
-  navigation: PropTypes.obj,
-};
-export default class ClassName extends Component<Props> {
+export default class Terms extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,11 +15,11 @@ export default class ClassName extends Component<Props> {
   }
 
 	render() {
-    const { params } = this.props.navigation.state;
 
     return (
       <View style={styles.container}>
-
+        <NavBar navigation={this.props.navigation} />
+        <Text>Work Under Progress :)</Text>
       </View>
     );
   }

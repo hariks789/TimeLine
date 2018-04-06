@@ -51,13 +51,20 @@ class Api {
   // }
 
   static xhr(route, params, verb, token) {
-    const host = 'http://thetimelines.org/api';
+    const host = 'http://www.thetimelines.org/api';
     const url = `${host}${route}`;
     let options = Object.assign({ method: verb }, params ? { body: JSON.stringify(params) } : null );
-    options.headers =
-    {
-    'Content-Type': 'application/json'
-    };
+    if(route === '/login') {
+      options.headers =
+      {
+        'Authorization': `${token}`,
+      };
+    } else {
+      options.headers =
+      {
+        'Content-Type': 'application/json'
+      };
+    }
     console.log('url', url, 'params:', options, params);
     return fetch(url, options)
     .then((res) => parseJson(res))

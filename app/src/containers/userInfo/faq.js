@@ -11,11 +11,12 @@ import {
   TouchableOpacity,
   Text
 } from 'react-native';
+import NavBar from '../../components/navBar/navBar';
 
 type Props = {
   navigation: PropTypes.obj,
 };
-export default class ClassName extends Component<Props> {
+export default class Faq extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +28,8 @@ export default class ClassName extends Component<Props> {
 
     return (
       <View style={styles.container}>
-
+        <NavBar navigation={this.props.navigation} />
+        <Text>FAQ :)</Text>
       </View>
     );
   }

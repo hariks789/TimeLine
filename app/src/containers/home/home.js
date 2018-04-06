@@ -10,6 +10,7 @@ import {
   StatusBar,
   ScrollView
 } from 'react-native';
+import BottomNavigation, { Tab } from 'react-native-material-bottom-navigation'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProfileCard from '../../components/profileCard/profileCard';
 import UserInfo from '../userInfo/userInfo';
@@ -27,8 +28,9 @@ export default class Home extends Component<Props> {
 
 	}
 
+
   renderContent() {
-    if(this.state.tabCount === 1) {
+    if(this.state.tabCount === 2) {
       return(
         <View style={{ flex: 1 }}>
           <View style={styles.tabContainer}>
@@ -52,9 +54,9 @@ export default class Home extends Component<Props> {
         <EventFeed navigation={this.props.navigation}/>
       );
     }
-    else if(this.state.tabCount === 3) {
+    else if(this.state.tabCount === 4) {
       return(
-        <UserInfo />
+        <UserInfo navigation={this.props.navigation}/>
       );
     } else {
       return(
@@ -82,7 +84,7 @@ export default class Home extends Component<Props> {
           }
         </View>
         <View style={styles.bottomTab}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.bottomTabButton}
             onPress={()=>{this.setState({ tabCount: 0})}}
           >
@@ -111,7 +113,47 @@ export default class Home extends Component<Props> {
             onPress={()=>{this.setState({ tabCount: 3})}}
           >
             <Icon name="account" color="#fff" size={30} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          <BottomNavigation
+            labelColor="white"
+            rippleColor="white"
+            style={{
+              height: 56,
+              elevation: 8,
+              position: 'absolute',
+              left: 0,
+              bottom: 0,
+              right: 0
+            }}
+            activeTab={this.state.tabCount}
+            onTabChange={newTabIndex => { console.log('newTabIndex', newTabIndex);this.setState({ tabCount: newTabIndex})}}
+          >
+            <Tab
+              barBackgroundColor="#8bc34a"
+              label="Home"
+              icon={<Icon size={24} color="white" name="home" />}
+            />
+            <Tab
+              barBackgroundColor="#00796B"
+              label="Search"
+              icon={<Icon size={24} color="white" name="magnify" />}
+            />
+            <Tab
+              barBackgroundColor="#8bc34a"
+              label="Discover"
+              icon={<Icon size={24} color="white" name="book" />}
+            />
+            <Tab
+              barBackgroundColor="#8bc34a"
+              label="Add"
+              icon={<Icon size={24} color="white" name="plus" />}
+            />
+            <Tab
+              barBackgroundColor="#8bc34a"
+              label="User"
+              icon={<Icon size={24} color="white" name="account" />}
+            />
+          </BottomNavigation>
         </View>
       </View>
     );
