@@ -6,13 +6,17 @@ import {
   PropTypes,
   Dimensions,
   View,
+  Modal,
   StatusBar,
+  TouchableOpacity
 } from 'react-native';
 import BottomNavigation, { Tab } from 'react-native-material-bottom-navigation'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import UserInfo from '../userInfo/userInfo';
 import EventFeed from '../eventFeed/eventFeed';
 import Timeline from '../timeline/timelineList';
+import MyTimeline from '../timeline/myTimeline';
+import Search from '../searchScreen/search';
 
 const {height, width} = Dimensions.get('window');
 
@@ -23,21 +27,25 @@ export default class Home extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      tabCount: 0
+      tabCount: 0,
+      showSearch: false
     };
   }
 
   renderContent = () => {
-    if(this.state.tabCount === 2) {
+    if(this.state.tabCount === 0) {
       return(
         <Timeline navigation={this.props.navigation}/>
       );
-    } else if(this.state.tabCount === 0) {
+    } else if(this.state.tabCount === 1) {
       return(
         <EventFeed navigation={this.props.navigation}/>
       );
-    }
-    else if(this.state.tabCount === 4) {
+    } else if(this.state.tabCount === 2) {
+     return(
+       <MyTimeline navigation={this.props.navigation}/>
+     );
+    } else if(this.state.tabCount === 4) {
       return(
         <UserInfo navigation={this.props.navigation}/>
       );
@@ -56,11 +64,50 @@ export default class Home extends Component<Props> {
     return (
       <View style={styles.container}>
         <StatusBar
-          hidden
+          backgroundColor="#8bc34a"
         />
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Timeline</Text>
+          <TouchableOpacity
+            style={styles.searchButton}
+            onPress={()=>{this.setState({ showSearch: true })}}
+          >
+            <Icon name="magnify" color="#fff" size={25} />
+            <Text style={styles.searchText}>Search</Text>
+          </TouchableOpacity>
+          <View style={styles.headerBox}>
+            <Text style={styles.headerText}>Timeline</Text>
+          </View>
+          <View style={styles.headerBox} />
         </View>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.showSearch}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
+          }}>
+          <View style={{flex: 1}}>
+            <View style={{flex: 1}}>
+              <View style={styles.headerContainer}>
+                <TouchableOpacity
+                  style={styles.searchButton}
+                  onPress={() => {
+                    this.setState({ showSearch: false });
+                  }}>
+                  <Icon name="arrow-left" color="#fff" size={30} />
+                </TouchableOpacity>
+                <View style={styles.headerBox}>
+                  <Text style={styles.headerText}>Timeline</Text>
+                </View>
+                <View style={styles.headerBox} />
+              </View>
+              <Search
+                navigation={this.props.navigation}
+                onSelect={() => {this.setState({ showSearch: false })}}
+              />
+            </View>
+          </View>
+        </Modal>
         <View style={{ flex: 0.85 }}>
           {
             this.renderContent()
@@ -113,23 +160,23 @@ export default class Home extends Component<Props> {
           >
             <Tab
               barBackgroundColor="#8bc34a"
-              label="Home"
-              icon={<Icon size={24} color="white" name="home" />}
-            />
-            <Tab
-              barBackgroundColor="#00796B"
-              label="Search"
-              icon={<Icon size={24} color="white" name="magnify" />}
-            />
-            <Tab
-              barBackgroundColor="#8bc34a"
               label="Discover"
               icon={<Icon size={24} color="white" name="book" />}
             />
             <Tab
               barBackgroundColor="#8bc34a"
-              label="Add"
+              label="My Feed"
+              icon={<Icon size={24} color="white" name="home" />}
+            />
+            <Tab
+              barBackgroundColor="#8bc34a"
+              label="My Timeline"
               icon={<Icon size={24} color="white" name="plus" />}
+            />
+            <Tab
+              barBackgroundColor="#8bc34a"
+              label="Notifications"
+              icon={<Icon size={24} color="white" name="bell" />}
             />
             <Tab
               barBackgroundColor="#8bc34a"
@@ -150,7 +197,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flex: 0.075,
-    justifyContent: 'center',
+    flexDirection: 'row',
     backgroundColor: '#8bc34a',
     alignItems: 'center',
     elevation: 2
@@ -166,12 +213,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  searchButton: {
+    flexDirection: 'row',
+    flex: 1,
+    paddingLeft: 5,
+    alignItems: 'center',
+  },
   tabText: {
     fontSize: 15,
     color: '#8bc34a'
   },
+  headerBox: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   headerText: {
     fontSize: 20,
+    color: '#fff'
+  },
+  searchText: {
+    fontSize: 18,
     color: '#fff'
   },
   contentName: {

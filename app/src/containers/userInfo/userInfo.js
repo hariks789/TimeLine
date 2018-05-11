@@ -28,16 +28,16 @@ export default class UserInfo extends Component<Props> {
 	}
 
   componentDidMount() {
-    AsyncStorage.multiGet(['loggedIn', 'userName', 'idToken', 'userPhoto']).then((data)=>{
+    AsyncStorage.multiGet(['loggedIn', 'userName', 'userPhoto']).then((data)=>{
       const loggedIn = data[0][1];
       const userName = data[1][1];
-      const idToken = data[2][1];
-      const userPhoto = data[3][1];
-      console.log('loggedIn', loggedIn);
+      const userPhoto = data[2][1];
+      console.log(userName, loggedIn);
       if(loggedIn) {
         this.setState({
           userName,
           userPhoto,
+          loggedIn: true
         });
       }
     })
@@ -46,7 +46,6 @@ export default class UserInfo extends Component<Props> {
   signIn = () => {
     console.log('GoogleSignin', GoogleSignin.hasPlayServices);
     GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
-      console.log('signIn aaaa');
       GoogleSignin.configure({
         webClientId: '789758131460-9e37vo1lg6n4bi7vmplra02sf41se59u.apps.googleusercontent.com',
       })
@@ -54,11 +53,14 @@ export default class UserInfo extends Component<Props> {
         GoogleSignin.signIn()
         .then((user) => {
           console.log(user);
-          Api.post('/login', null, user.idToken).then((resp)=>console.log('resp login', resp))
-          AsyncStorage.setItem('loggedIn', 'true')
-          AsyncStorage.setItem('userName', user.name)
-          AsyncStorage.setItem('idToken', user.idToken)
-          AsyncStorage.setItem('userPhoto', user.photo)
+          Api.post('/login', null, user.idToken).then((resp)=>{
+            console.log('resp login', resp);
+            AsyncStorage.setItem('idToken', resp.token)
+            AsyncStorage.setItem('loggedIn', 'true')
+            AsyncStorage.setItem('userName', user.name)
+            AsyncStorage.setItem('userPhoto', user.photo)
+            AsyncStorage.setItem('userTimeID', resp.timeline_id)
+          });
           this.setState({
             user: user,
             userName: user.name,

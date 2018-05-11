@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
   FlatList,
+  AsyncStorage,
 } from 'react-native';
 import Api from '../../../api/api';
 import EventComp from '../../components/eventComp/eventComp';
@@ -18,8 +19,15 @@ export default class MyFeed extends Component<Props> {
 	}
 
   componentDidMount() {
-    Api.get('/follow-timeline-events?from-latest=false&start=0&l=14').then(resp => {
-      if(Array.isArray(resp)) this.setState({ events: resp })
+    AsyncStorage.multiGet(['loggedIn', 'idToken']).then((data)=>{
+      const loggedIn = data[0][1];
+      const idToken = data[1][1];
+      console.log('loggedIn', loggedIn);
+      if(loggedIn) {
+        Api.get('/follow-timeline-events?from-latest=false&start=0&l=14', idToken).then(resp => {
+          if(Array.isArray(resp)) this.setState({ events: resp })
+        })
+      }
     })
   }
 

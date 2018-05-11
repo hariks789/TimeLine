@@ -41,7 +41,6 @@ export default class TimelineList extends Component<Props> {
         <TouchableOpacity
           key={index} style={styles.timeline}
           onPress={()=> {
-            console.log('asdfhgfywgedsly');
             this.props.navigation.navigate('Timeline', { id: item.id, details: item })
           }}
         >
@@ -135,8 +134,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 15,
     color: '#8bc34a',
-    fontWeight: 'bold',
-    flexWrap: 'wrap',
+    fontWeight: 'bold'
   },
   timelineContainer: {
     flexWrap: 'wrap',
